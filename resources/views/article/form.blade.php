@@ -5,7 +5,8 @@
 @section('content')
   {!! Form::model($article, [
     'method' => $article->exists ? 'put' : 'post',
-    'route' => $article->exists ? ['article.update', $article->id] : ['article.store']
+    'route' => $article->exists ? ['article.update', $article->id] : ['article.store'],
+    'files' => true
   ]) !!}
 
   <div class="form-group">
@@ -20,7 +21,7 @@
 
   <div class="form-group">
     {!! Form::label('Изображение') !!}
-    {!! Form::text('img', null, ['class' => 'form-control']) !!}
+    {!! Form::file('img', null, ['class' => 'form-control']) !!}
   </div>
 
   

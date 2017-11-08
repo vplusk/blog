@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 class ArticleController extends Controller
 {
@@ -36,7 +39,7 @@ class ArticleController extends Controller
      */
     public function create(Article $article)
     {         
-         return view('article/form', compact('article'));
+        return view('article/form', compact('article'));
     }
 
     /**
@@ -45,11 +48,21 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Requests\StoreArticleRequest $request)
-    {        
-        $this->articles->create(['author_id' => auth()->user()->id] + $request->only('title', 'body', 'img'));
+    public function store(Request $request)
+    {          
+        $img = $request->file('img');
+        $filename = $this->getFileName($img);        
+        $img->move(base_path('public'), $filename);
+
+        $this->articles->create(['author_id' => auth()->user()->id, 'img' => $filename] + $request->only('title', 'body'));
+        
 
         return redirect(route('article.index'))->with('status', 'Статья успешно создана');
+    }
+
+    private function getFileName($file)
+    {        
+    	return str_random(32).'.'.$file->extension();
     }
 
     /**
@@ -86,6 +99,9 @@ class ArticleController extends Controller
     public function update(Requests\UpdateArticleRequest $request, $id)
     {
         $article = $this->articles->findOrFail($id);
+        
+        $filename = $this->getFileName($request->image);
+    	$request->image->move(base_path('public'), $filename);
         
         $article->fill($request->only('title', 'body', 'img'))->save();
         return redirect(route('article.edit', $article->id))->with('status', 'Статья успешно изменена');

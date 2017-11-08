@@ -23,6 +23,9 @@
                 padding: 10px;
                 margin-bottom: 20px;
             }
+            .article-wrap img {
+                max-width: 90%;
+            }
             .comment-wrap {
                 margin-left: 20px;
                 padding-left: 10px;
@@ -55,7 +58,7 @@
                     @if (Route::has('login'))
                         <div class="top-right links">
                             @auth
-                                <a href="{{ url('/home') }}">Home</a>
+                                <a href="{{ url('/dashboard/article') }}">Панель управления</a>
                             @else
                                 <a href="{{ route('login') }}">Вход</a>
                                 <a href="{{ route('register') }}">Регистрация</a>
