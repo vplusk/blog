@@ -23,6 +23,11 @@
                 padding: 10px;
                 margin-bottom: 20px;
             }
+            .comment-wrap {
+                margin-left: 20px;
+                padding-left: 10px;
+                border-left: 2px solid #000;                 
+            }
             .comment-area {
                 height: 90px !important;
             }
@@ -76,7 +81,17 @@
                         @endif   
                         <p>{{ $article->body }}</p>                        
                     </div>
-                    <div class="comments-wrap">
+                    <div class="comments-wrap">                        
+                        @foreach($comments as $comment)
+                            @if ($comment->article_id == $article->id)                                
+                            <div class="comment-wrap">
+                                <span>{{ date('d.m.Y', strtotime($article->created_at)) }}</span>
+                                <p>{{ $comment->body }}</p>
+                            </div>
+                            <br>
+                            @endif                            
+                        @endforeach                        
+                        
                         {!! Form::open(['route' => ['comment.store', $article->id]]) !!}
                         {!! Form::hidden('article_id', $article->id) !!}
                         <div class="form-group">                        
@@ -86,7 +101,8 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-            </div>                
+            </div>
+            <br>              
             @endforeach                
             
             <div class="row">

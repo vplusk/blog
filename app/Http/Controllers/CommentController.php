@@ -36,7 +36,7 @@ class CommentController extends Controller
         
         $comment->save();
 
-        return view('welcome');
+        return redirect('/');
     }
 
 }
