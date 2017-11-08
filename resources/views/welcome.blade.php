@@ -73,6 +73,9 @@
         <div class="container">
             
             
+            @if(count($articles) == 0)
+                <h4>К сожалению, пока что нет статей</h4>
+            @endif
             @foreach($articles as $article)
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
