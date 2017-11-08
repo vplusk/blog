@@ -23,6 +23,9 @@
                 padding: 10px;
                 margin-bottom: 20px;
             }
+            .comment-area {
+                height: 90px !important;
+            }
             h4 {
                 margin-bottom: 10px;
             }
@@ -41,7 +44,7 @@
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <h2 class="text-center">BLOGOSFERA</h2>
-                </div>
+                </div>                
                 
                 <div class="col-md-4">
                     @if (Route::has('login'))
@@ -60,23 +63,32 @@
         
 
         <div class="container">
-            <div class="row">
+            
+            
             @foreach($articles as $article)
-                
-                    <div class="article-wrap col-md-6 col-md-offset-3">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="article-wrap">
                         <h3><strong>{{ $article->title }}</strong></h3>
                         <span>{{ date('d.m.Y', strtotime($article->created_at)) }}</span>
                         @if ($article->img)
                             <img src="{{ $article->img }}" />
                         @endif   
-                        <p>{{ $article->body }}</p>
+                        <p>{{ $article->body }}</p>                        
                     </div>
-
-                    
-                    
-                </tr>
-                @endforeach                
-            </div>
+                    <div class="comments-wrap">
+                        {!! Form::open(['route' => ['comment.store', $article->id]]) !!}
+                        {!! Form::hidden('article_id', $article->id) !!}
+                        <div class="form-group">                        
+                            {!! Form::textarea('body', null, ['class' => 'form-control comment-area']) !!}
+                        </div>
+                        {!! Form::submit('Отправить', ['class' => 'btn btn-primary']) !!}
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+            </div>                
+            @endforeach                
+            
             <div class="row">
                 <div class="text-center">{{$articles->links()}}</div>
             </div>

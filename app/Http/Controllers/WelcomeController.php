@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class WelcomeController extends Controller
 {
-    protected $articles;
+    protected $articles;    
 
     public function __construct(Article $articles)
     {
         //$this->middleware('guest');
-        $this->articles = $articles;
+        $this->articles = $articles;        
     }
 
     /**
@@ -25,7 +26,7 @@ class WelcomeController extends Controller
     {        
         $articles = $this->articles->paginate(10);
         
-        return view('welcome')->with('articles', $articles);        
+        return view('welcome')->with('articles', $articles);
         
     }
 }

@@ -19,3 +19,6 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::get('dashboard/articles/{articles}/confirm', ['as' => 'article.confirm', 'uses' => 'ArticleController@confirm']);
 Route::resource('dashboard/article', 'ArticleController');
+
+//Route::post('comment', ['as' => 'comment.store', 'uses' => 'CommentController@store']);
+Route::post('comment', ['as' => 'comment.store', 'uses' => 'CommentController@store']);

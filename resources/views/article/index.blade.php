@@ -13,7 +13,7 @@
   </thead>  
   <tbody>
     @foreach($articles as $article)
-      <tr>        
+      <tr>
         <td>{{ $article->title }}</td>
         <td>{{ $article->author_id }}</td>
         <td><a href="{{ route('article.edit', $article->id) }}"><span class="glyphicon glyphicon-edit"></span></a></td>
